@@ -216,6 +216,15 @@ class SuggestionsController<T> extends ChangeNotifier {
   /// This notifies potential listeners of the selection.
   void select(T suggestion) => _selectionsController.add(suggestion);
 
+  /// A stream of query events.
+  Stream<void> get queries => _queriesController.stream;
+  final _queriesController = StreamController<void>.broadcast();
+
+  /// Should be called when a suggestion is selected.
+  ///
+  /// This notifies potential listeners of the selection.
+  void query() => _queriesController.add(null);
+
   /// Focuses the suggestions box.
   void focusBox() {
     if (_focusState == SuggestionsFocusState.box) return;

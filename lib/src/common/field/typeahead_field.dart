@@ -39,6 +39,7 @@ abstract class RawTypeAheadField<T> extends StatefulWidget {
     required this.loadingBuilder,
     required this.emptyBuilder,
     required this.onSelected,
+    this.onQueried,
     this.scrollController,
     this.suggestionsController,
     required this.suggestionsCallback,
@@ -64,6 +65,9 @@ abstract class RawTypeAheadField<T> extends StatefulWidget {
 
   /// {@macro flutter_typeahead.SuggestionsField.onSelected}
   final ValueSetter<T>? onSelected;
+
+  /// {@macro flutter_typeahead.SuggestionsField.onQueried}
+  final VoidCallback? onQueried;
 
   /// {@macro flutter_typeahead.SuggestionsField.direction}
   final VerticalDirection? direction;
@@ -194,6 +198,7 @@ class _RawTypeAheadFieldState<T> extends State<RawTypeAheadField<T>> {
     return SuggestionsField<T>(
       controller: widget.suggestionsController,
       onSelected: widget.onSelected,
+      onQueried: widget.onQueried,
       focusNode: focusNode,
       direction: widget.direction,
       autoFlipDirection: widget.autoFlipDirection,

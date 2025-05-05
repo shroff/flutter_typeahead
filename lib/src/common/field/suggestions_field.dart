@@ -8,6 +8,7 @@ import 'package:flutter_typeahead/src/common/field/suggestions_field_focus_conne
 import 'package:flutter_typeahead/src/common/field/suggestions_field_highlight_connector.dart';
 import 'package:flutter_typeahead/src/common/field/suggestions_field_keyboard_connector.dart';
 import 'package:flutter_typeahead/src/common/field/suggestions_field_box_connector.dart';
+import 'package:flutter_typeahead/src/common/field/suggestions_field_query_connector.dart';
 import 'package:flutter_typeahead/src/common/field/suggestions_field_select_connector.dart';
 import 'package:flutter_typeahead/src/common/field/suggestions_field_tap_connector.dart';
 
@@ -20,6 +21,7 @@ class SuggestionsField<T> extends StatefulWidget {
     required this.child,
     required this.focusNode,
     this.onSelected,
+    this.onQueried,
     this.direction,
     this.autoFlipDirection = false,
     this.autoFlipMinHeight = 64,
@@ -67,6 +69,15 @@ class SuggestionsField<T> extends StatefulWidget {
   /// You may also add a callback like this to the [SuggestionsController.selections] stream.
   /// {@endtemplate}
   final ValueSetter<T>? onSelected;
+
+  /// {@template flutter_typeahead.SuggestionsField.onQueried}
+  /// Called when the typeahead field is queried directly
+  ///
+  /// If [hideOnSelect] is true, the suggestions box will be closed after this callback is called.
+  ///
+  /// You may also add a callback like this to the [SuggestionsController.queries] stream.
+  /// {@endtemplate}
+  final VoidCallback? onQueried;
 
   /// {@template flutter_typeahead.SuggestionsField.direction}
   /// The direction in which the suggestions box opens.
@@ -310,7 +321,12 @@ class _SuggestionsFieldState<T> extends State<SuggestionsField<T>> {
                         controller: controller,
                         hideOnSelect: widget.hideOnSelect,
                         onSelected: widget.onSelected,
-                        child: widget.child,
+                        child: SuggestionsFieldQueryConnector(
+                          controller: controller,
+                          hideOnSelect: widget.hideOnSelect,
+                          onQueried: widget.onQueried,
+                          child: widget.child,
+                        ),
                       ),
                     ),
                   ),

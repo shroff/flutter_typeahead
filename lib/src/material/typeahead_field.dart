@@ -35,6 +35,7 @@ class TypeAheadField<T> extends RawTypeAheadField<T> {
     WidgetBuilder? loadingBuilder,
     WidgetBuilder? emptyBuilder,
     required super.onSelected,
+    super.onQueried,
     super.scrollController,
     super.suggestionsController,
     required super.suggestionsCallback,

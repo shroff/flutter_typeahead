@@ -50,7 +50,10 @@ class _SuggestionsFieldHighlightConnectorState<T>
   late final _selectOptionAction = _ConditionalCallbackAction<ActivateIntent>(
     onInvoke: (_) {
       int? index = widget.controller.highlighted;
-      if (index == null) return null;
+      if (index == null || index == -1) {
+        widget.controller.query();
+        return null;
+      }
       T? highlighted = widget.controller.suggestions?.elementAtOrNull(
         index,
       );
